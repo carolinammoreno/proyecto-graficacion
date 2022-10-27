@@ -25,6 +25,7 @@ import javax.swing.JPanel;
    /10/2022  Graficación - 
  */
 public class ProyectoDos extends JFrame{
+    //constuctor
     public ProyectoDos() {
         setTitle("Proyecto - Dibujo - Laura Millan 20130415");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
