@@ -72,11 +72,15 @@ class DibujoPanel extends JPanel implements MouseMotionListener{
     public void paintComponent(Graphics g){
         Graphics2D g2d = (Graphics2D)g;
            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-           g2d.drawImage(img, 250, 0,500,650, this);
+           //g2d.drawImage(img, 250, 0,500,650, this);
            
            //COLORES
            Color RosaBase = new Color(209, 96, 96);
            Color RosaClaro = new Color(255, 171, 171);
+           GradientPaint Rostro = new GradientPaint(0,0, RosaClaro, 0,280, RosaBase); //Degradado de la luz del pelito
+           Color RojoObscuro = new Color(87, 25, 41);
+           Color RojoClaro = new Color(128, 40, 40);
+           GradientPaint LineArtPiel = new GradientPaint(0,0, RojoObscuro, 0,200, RojoClaro);
            
            g2d.setColor(Color.YELLOW);
           
@@ -130,7 +134,7 @@ class DibujoPanel extends JPanel implements MouseMotionListener{
            GradientPaint cab = new GradientPaint(0,0, cabBase, 0,450, cabSombra);
            g2d.setPaint(cab);
            g2d.fill(cabello); //CABELLO (parte atras)
-           g2d.setColor(Color.BLACK);
+           g2d.setPaint(LineArtPiel);
            g2d.draw(cabello);
            
             //DEDO ATRAS MANO IZQUIERDA
@@ -143,7 +147,21 @@ class DibujoPanel extends JPanel implements MouseMotionListener{
            dedoIzq.curveTo(398, 152, 397, 159, 386, 170);
            dedoIzq.quadTo(358, 216, 363, 224);
            dedoIzq.closePath();
-           //g2d.draw(dedoIzq);
+           g2d.setPaint(Rostro);
+           g2d.fill(dedoIzq);
+           g2d.setPaint(LineArtPiel);
+           g2d.draw(dedoIzq);
+           
+           //Fondo cuello/pecho por ahí
+           GeneralPath fondo = new GeneralPath();
+           fondo.moveTo(634, 346);
+           fondo.curveTo(580, 371, 400, 452, 527, 588);
+           fondo.curveTo(585, 674, 663, 677, 694, 620);
+           fondo.closePath();
+           g2d.setColor(RojoObscuro);
+           g2d.fill(fondo);
+           
+           
            
            //contorno rostro
           GeneralPath r = new GeneralPath();
@@ -161,17 +179,17 @@ class DibujoPanel extends JPanel implements MouseMotionListener{
             
           g2d.setColor(new Color(80, 12, 21));
           g2d.draw(r); //Dibujo del contorno
-          GradientPaint Rostro = new GradientPaint(0,0, RosaClaro, 0,280, RosaBase); //Degradado de la luz del pelito
           g2d.setPaint(Rostro);
           g2d.fill(r);
           g2d.setColor(Color.BLACK);
+          g2d.setPaint(LineArtPiel);
           g2d.draw(r);
           
           //hoyito nariz
           GeneralPath narO = new GeneralPath();
           narO.moveTo(436, 233);
           narO.quadTo(440, 234, 446, 244);
-          g2d.setColor(Color.BLACK);
+          g2d.setPaint(LineArtPiel);
           g2d.draw(narO);
            
           
@@ -489,6 +507,19 @@ class DibujoPanel extends JPanel implements MouseMotionListener{
            g2d.setColor(new Color(50,13,20));
            g2d.draw(cLab);
            
+           //HOMBROS//
+           GeneralPath Hombro = new GeneralPath();
+           Hombro.moveTo(628, 375);
+           Hombro.curveTo(601, 413, 566, 449, 574, 511);
+           Hombro.curveTo(581, 553, 603, 601, 630, 651);
+           Hombro.quadTo(804, 698, 753, 567);
+           Hombro.lineTo(680, 401);
+           Hombro.closePath();
+           g2d.setPaint(Rostro);
+           g2d.fill(Hombro);        
+           g2d.setPaint(LineArtPiel);
+           g2d.draw(Hombro);
+           
            
            //MANO DERECHA
            GeneralPath mDer = new GeneralPath();
@@ -539,8 +570,30 @@ class DibujoPanel extends JPanel implements MouseMotionListener{
            mDer.quadTo(559, 573, 597, 617);
            mDer.quadTo(613, 632, 638, 665);
            mDer.closePath();
+           GradientPaint Mano = new GradientPaint(0,400, RosaBase, 0,0, RosaClaro); //Degradado de la luz del pelito
+           g2d.setPaint(Mano);
+           g2d.fill(mDer);
+           g2d.setPaint(LineArtPiel);
+           //g2d.setColor(Color.YELLOW);
            g2d.draw(mDer);
            
+           GeneralPath lins = new GeneralPath();
+           lins.moveTo(580, 238);
+           lins.quadTo(580, 246, 579, 254);
+           lins.quadTo(580, 263, 576, 273);
+           lins.curveTo(575, 276, 575, 282, 572, 294);
+           lins.quadTo(565, 311, 564, 337);
+           g2d.draw(lins);
+           
+           GeneralPath lins2 = new GeneralPath();
+           lins2.moveTo(603, 264);
+           lins2.curveTo(603, 271, 590, 293, 588, 336);
+           g2d.draw(lins2);
+           
+           GeneralPath lins3 = new GeneralPath();
+           lins3.moveTo(608, 338);
+           lins3.quadTo(603, 370, 587, 399);
+           g2d.draw(lins3);
            //MANO IZQ
            GeneralPath mIzq = new GeneralPath();
            mIzq.moveTo(355, 649);
@@ -564,7 +617,12 @@ class DibujoPanel extends JPanel implements MouseMotionListener{
            mIzq.quadTo(435, 404, 418, 433);
            mIzq.curveTo(411, 445, 405, 475, 466, 647);
            mIzq.closePath();
+           g2d.setPaint(Mano);
+           g2d.fill(mIzq);
+           g2d.setPaint(LineArtPiel);
            g2d.draw(mIzq);
+           
+           
            
     ////// COPETE /////////
            GeneralPath Cop = new GeneralPath();
@@ -596,7 +654,64 @@ class DibujoPanel extends JPanel implements MouseMotionListener{
            g2d.setPaint(copetito);
            g2d.fill(Cop);
            
-        /// TONO CLARO EN COPETE ///
+        
+        
+            //MECHON QUE LE SIGUE AL DE ABAJO
+            GeneralPath mCab2 = new GeneralPath();
+            mCab2.moveTo(623, 193);
+            mCab2.curveTo(640, 198, 651, 211, 652, 229);
+            mCab2.curveTo(652, 245, 649, 262, 641, 273);
+            mCab2.curveTo(632, 287, 610, 313, 610, 333);
+            mCab2.curveTo(613, 359, 624, 397, 672, 400);
+            mCab2.quadTo(657, 398, 644, 393);
+            mCab2.curveTo(637, 410, 626, 423, 591, 413);
+            mCab2.curveTo(618, 425, 639, 439, 662, 420);
+            mCab2.curveTo(655, 443, 637, 464, 645, 475);
+            mCab2.curveTo(652, 490, 667, 497, 687, 502);
+            mCab2.quadTo(700, 506, 706, 515);
+            mCab2.curveTo(710, 526, 705, 550, 668, 551);
+            mCab2.curveTo(689, 560, 706, 560, 714, 547);
+            mCab2.quadTo(716, 541, 716, 528);
+            mCab2.curveTo(720, 537, 727, 548, 706, 558);
+            mCab2.curveTo(735, 553, 738, 538, 724, 523);
+            mCab2.curveTo(709, 505, 688, 479, 697, 439);
+            mCab2.quadTo(709, 404, 688, 370);
+            mCab2.curveTo(674, 351, 669, 332, 682, 305);
+            mCab2.curveTo(689, 281, 684, 234, 662, 204);
+            mCab2.curveTo(645, 184, 630, 160, 619, 124);
+            mCab2.quadTo(601, 77, 559, 38);
+            mCab2.curveTo(575, 80, 586, 130, 605, 170);
+            mCab2.closePath();
+            g2d.setPaint(copetito);
+            g2d.fill(mCab2);
+            
+        //MECHON CABELLO (ARRIBA DE HOMBRO Y MANO DERECHA
+        
+        GeneralPath mCab = new GeneralPath();
+        mCab.moveTo(559, 138);
+        mCab.quadTo(571, 159, 583, 172);
+        mCab.curveTo(575, 210, 587, 234, 600, 251);
+        mCab.curveTo(606, 263, 619, 281, 609, 297);
+        mCab.quadTo(600, 315, 569, 334);
+        mCab.quadTo(596, 326, 614, 318);
+        mCab.curveTo(624, 313, 636, 306, 631, 287);
+        mCab.quadTo(623, 271, 599, 231);
+        mCab.quadTo(616, 247, 644, 247);
+        mCab.curveTo(619, 238, 603, 230, 598, 209);
+        mCab.quadTo(595, 194, 596, 184);
+        mCab.quadTo(591, 180, 584, 173);
+        mCab.quadTo(591, 180, 596, 184 );
+        mCab.quadTo(612, 196, 636, 208 );
+        mCab.curveTo(601, 176, 590, 143, 580, 103);
+        mCab.quadTo(576, 75, 559, 38);
+        mCab.curveTo(552, 57, 551, 87, 554, 119);
+        mCab.closePath();
+        g2d.setPaint(copetito);
+            g2d.fill(mCab);
+            
+            
+            
+            /// TONO CLARO EN COPETE ///
         GeneralPath TonoClaro_cop = new GeneralPath();
         TonoClaro_cop.moveTo(556, 36);
         TonoClaro_cop.curveTo(524, 15, 473, 17, 426, 49);
@@ -622,7 +737,8 @@ class DibujoPanel extends JPanel implements MouseMotionListener{
             GradientPaint LuzCabello_Rosa = new GradientPaint(0,0, RosaClaro, 0,100, RosaBase); //Degradado de la luz del pelito
             g2d.setPaint(LuzCabello_Rosa);
             g2d.fill(TonoClaro_cop);
-           
+            
+            
             
     }
     
